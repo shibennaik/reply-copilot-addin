@@ -2,52 +2,16 @@
 <html>
 <head>
   <meta charset="utf-8"/>
-  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-  <script defer src="./taskpane.js"></script>
-  <style> body{font-family:Segoe UI,Arial,sans-serif;padding:16px;} label{display:block;margin-top:12px;} input,select{width:100%;padding:6px;} </style>
+  https://appsforoffice.microsoft.com/lib/1/hosted/office.js</script>
+  ./taskpane.js</script>
+  <style>
+    body{font-family:Segoe UI,Arial,sans-serif;padding:16px;}
+    label{display:block;margin-top:12px;}
+    input,select{width:100%;padding:6px;}
+  </style>
 </head>
 <body>
   <h3>Reply Copilot Settings</h3>
-  <div>
-    <label>Draft length
-      <select id="length">
-        <option value="medium" selected>Medium</option>
-        <option value="concise">Concise</option>
-        <option value="long">Long</option>
-      </select>
-    </label>
-    <label>Tone
-      <select id="tone">
-        <option value="direct" selected>Direct</option>
-        <option value="neutral">Neutral</option>
-        <option value="warm">Warm</option>
-      </select>
-    </label>
-    <label>Closing
-      <input id="closing" value="Thanks"/>
-    </label>
-    <label><input type="checkbox" id="tldr" checked/> Include TL;DR</label>
-    <hr/>
-    <h4>Optional: LLM provider</h4>
-    <label>Provider
-      <select id="apiProvider">
-        <option value="">(none)</option>
-        <option value="azure">Azure OpenAI</option>
-        <option value="openai">OpenAI</option>
-      </select>
-    </label>
-    <label>Endpoint (Azure OpenAI, e.g., https://YOUR-RES.openai.azure.com/)</label>
-    <input id="endpoint" placeholder="https://...azure.com/"/>
-    <label>Deployment (Azure OpenAI)</label>
-    <input id="deployment" placeholder="gpt-4o-mini"/>
-    <label>API Version (Azure OpenAI)</label>
-    <input id="apiVersion" placeholder="2024-08-01-preview"/>
-    <label>API Key</label>
-    <input id="apiKey" placeholder="sk-..." type="password"/>
-    <label>OpenAI model (if OpenAI provider)</label>
-    <input id="model" placeholder="gpt-4o-mini"/>
-    <button id="save">Save settings</button>
-    <div id="saved" style="color:green;display:none;margin-top:8px;">Saved ✓</div>
-  </div>
+  <!-- rest unchanged -->
 </body>
 </html>

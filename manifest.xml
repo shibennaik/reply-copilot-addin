@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
-           xsi:type="MailApp">
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xsi:type="MailApp">
+
   <Id>f5e84f06-1a7a-42b9-9b7d-9f12b7c1c0aa</Id>
   <Version>1.0.0.0</Version>
   <ProviderName>Shiben Naik</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Reply Copilot for Outlook"/>
-  <Description DefaultValue="Auto-draft replies with TL;DR (direct tone, medium length, 'Thanks' closing) and learn from Sent Items." />
+  <Description DefaultValue="Auto-draft replies with TL;DR in a direct tone (medium length, 'Thanks' closing), and learn from Sent Items." />
 
-  <!-- Optional: icons (add icon-16.png, icon-32.png, icon-80.png to your repo to see ribbon icons) -->
+  <!-- Permissions for compose/read interactions -->
+  <Permissions>ReadWriteItem</Permissions>
+
+  <!-- Icons: must be valid HTTPS images (upload placeholders as icon-32.png & icon-80.png) -->
   <IconUrl DefaultValue="https://shibennaik.github.io/reply-copilot-addin/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://shibennaik.github.io/reply-copilot-addin/icon-80.png"/>
 
@@ -24,7 +29,10 @@
     <Host Name="Mailbox"/>
   </Hosts>
 
-  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
+  <VersionOverrides
+    xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
+    xsi:type="VersionOverridesV1_1">
+
     <Requirements>
       <Sets DefaultMinVersion="1.11">
         <Set Name="Mailbox"/>
@@ -34,10 +42,11 @@
     <Hosts>
       <Host xsi:type="Mailbox">
         <DesktopFormFactor>
-          <!-- This HTML must load Office.js + commands.js + events.js -->
+
+          <!-- Function file must load Office.js + commands.js + events.js -->
           <FunctionFile resid="resid.FunctionFile.Url"/>
 
-          <!-- Ribbon button on message READ -->
+          <!-- Ribbon command on message READ -->
           <ExtensionPoint xsi:type="MessageReadCommandSurface">
             <OfficeTab id="TabDefault">
               <Group id="msgread.group" label="Reply Copilot">
@@ -60,7 +69,7 @@
             </OfficeTab>
           </ExtensionPoint>
 
-          <!-- Ribbon button in COMPOSE -->
+          <!-- Ribbon command in COMPOSE -->
           <ExtensionPoint xsi:type="MessageComposeCommandSurface">
             <OfficeTab id="TabDefault">
               <Group id="compose.group" label="Reply Copilot">
@@ -83,7 +92,7 @@
             </OfficeTab>
           </ExtensionPoint>
 
-          <!-- Event-based activation: auto-draft on Reply; learn on Send -->
+          <!-- Event-based: auto draft on Reply; learn on Send -->
           <ExtensionPoint xsi:type="LaunchEvent">
             <LaunchEvents>
               <LaunchEvent Type="OnNewMessageCompose" FunctionName="onNewMessageCompose" />
@@ -91,15 +100,16 @@
             </LaunchEvents>
           </ExtensionPoint>
 
-          <!-- Taskpane (settings) -->
+          <!-- Taskpane page (settings) -->
           <Page resid="resid.Taskpane.Url"/>
+
         </DesktopFormFactor>
       </Host>
     </Hosts>
 
     <Resources>
       <bt:Images>
-        <bt:Image id="icon16" DefaultValue="https://shibennaik.github.io/reply-copilot-addin/icon-16.png"/>
+        <bt:Image id="icon16" DefaultValue="https://shibennaik.github.io/reply-copilot-addin/icon-32.png"/>
         <bt:Image id="icon32" DefaultValue="https://shibennaik.github.io/reply-copilot-addin/icon-32.png"/>
         <bt:Image id="icon80" DefaultValue="https://shibennaik.github.io/reply-copilot-addin/icon-80.png"/>
       </bt:Images>

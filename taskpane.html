@@ -1,16 +1,92 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reply Copilot – Settings</title>
+
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   <script src="./taskpane.js"></script>
+
   <style>
-    body{font-family:Segoe UI,Arial,sans-serif;padding:16px;}
-    label{display:block;margin-top:12px;}
-    input,select{width:100%;padding:6px;}
+    body{font-family:Segoe UI,Arial,sans-serif;padding:16px;line-height:1.4}
+    label{display:block;margin-top:12px}
+    input,select,button{padding:6px}
+    .row{margin-bottom:10px}
+    #saved{color:green;display:none}
   </style>
 </head>
 <body>
-  <h3>Reply Copilot Settings</h3>
+  <h3>Reply Copilot – Settings</h3>
+
+  <div class="row">
+    <label>Draft length
+      <select id="length">
+        <option value="concise">Concise</option>
+        <option value="medium" selected>Medium</option>
+        <option value="long">Long</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="row">
+    <label>Tone
+      <select id="tone">
+        <option value="direct" selected>Direct</option>
+        <option value="neutral">Neutral</option>
+        <option value="warm">Warm</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="row">
+    <label>Closing
+      <input id="closing" value="Thanks"/>
+    </label>
+  </div>
+
+  <div class="row">
+    <label><input type="checkbox" id="tldr" checked/> Include TL;DR</label>
+  </div>
+
+  <hr/>
+
+  <h4>Optional: Connect an LLM (for richer drafts)</h4>
+  <div class="row">
+    <label>Provider
+      <select id="apiProvider">
+        <option value="">(none)</option>
+        <option value="azure">Azure OpenAI</option>
+        <option value="openai">OpenAI</option>
+      </select>
+    </label>
+  </div>
+  <div class="row">
+    <label>Endpoint (Azure OpenAI): e.g., https://YOUR-RES.openai.azure.com/</label>
+    <input id="endpoint" placeholder="https://...azure.com/"/>
+  </div>
+  <div class="row">
+    <label>Deployment (Azure OpenAI)</label>
+    <input id="deployment" placeholder="gpt-4o-mini"/>
+  </div>
+  <div class="row">
+    <label>API Version (Azure OpenAI)</label>
+    <input id="apiVersion" placeholder="2024-08-01-preview"/>
+  </div>
+  <div class="row">
+    <label>API Key</label>
+    <input id="apiKey" type="password" placeholder="sk-..." />
+  </div>
+  <div class="row">
+    <label>OpenAI model (if provider=OpenAI)</label>
+    <input id="model" placeholder="gpt-4o-mini" />
+  </div>
+
+  <div class="row">
+    <button id="save">Save settings</button>
+    <button id="reset" style="margin-left:8px;background:#eee">Reset profile</button>
+    <span id="saved">Saved ✓</span>
+  </div>
 </body>
 </html>

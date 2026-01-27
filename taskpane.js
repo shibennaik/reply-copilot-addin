@@ -4,49 +4,70 @@ Office.onReady(() => {
 });
 
 function init() {
-  const s = Office.context.roamingSettings.get("replycopilot.settings") || {};
-  const p = (Office.context.roamingSettings.get("replycopilot.profile") || { prefs: {} }).prefs;
+  const settings = Office.context.roamingSettings.get("replycopilot.settings") || {};
+  const profile = Office.context.roamingSettings.get("replycopilot.profile") || {
+    prefs: { tone: "direct", length: "medium", closing: "Thanks", tldr: true },
+    style: { greeting: "Hi" },
+    signatureHtml: ""
+  };
 
-  setVal("length", p.length || "medium");
-  setVal("tone", p.tone || "direct");
-  setVal("closing", p.closing || "Thanks");
-  setChecked("tldr", p.tldr !== false);
+  setVal("length", profile.prefs.length || "medium");
+  setVal("tone", profile.prefs.tone || "direct");
+  setVal("closing", profile.prefs.closing || "Thanks");
+  setChecked("tldr", profile.prefs.tldr !== false);
 
-  setVal("apiProvider", s.apiProvider || "");
-  setVal("endpoint", s.endpoint || "");
-  setVal("deployment", s.deployment || "");
-  setVal("apiVersion", s.apiVersion || "");
-  setVal("apiKey", s.apiKey || "");
-  setVal("model", s.model || "");
+  setVal("apiProvider", settings.apiProvider || "");
+  setVal("endpoint", settings.endpoint || "");
+  setVal("deployment", settings.deployment || "");
+  setVal("apiVersion", settings.apiVersion || "");
+  setVal("apiKey", settings.apiKey || "");
+  setVal("model", settings.model || "");
 
-  document.getElementById("save").addEventListener("click", () => {
-    const profile = Office.context.roamingSettings.get("replycopilot.profile") || { prefs: {}, style: {} };
-    profile.prefs = {
-      length: getVal("length"),
-      tone: getVal("tone"),
-      closing: getVal("closing"),
-      tldr: getChecked("tldr")
-    };
-    Office.context.roamingSettings.set("replycopilot.profile", profile);
+  document.getElementById("save").addEventListener("click", saveAll);
+  document.getElementById("reset").addEventListener("click", resetProfile);
+}
 
-    const settings = {
-      apiProvider: getVal("apiProvider"),
-      endpoint: getVal("endpoint"),
-      deployment: getVal("deployment"),
-      apiVersion: getVal("apiVersion"),
-      apiKey: getVal("apiKey"),
-      model: getVal("model")
-    };
-    Office.context.roamingSettings.set("replycopilot.settings", settings);
+function saveAll() {
+  const profile = Office.context.roamingSettings.get("replycopilot.profile") || { prefs: {}, style: {} };
+  profile.prefs = {
+    length: getVal("length"),
+    tone: getVal("tone"),
+    closing: getVal("closing"),
+    tldr: getChecked("tldr")
+  };
+  Office.context.roamingSettings.set("replycopilot.profile", profile);
 
-    Office.context.roamingSettings.saveAsync(() => {
-      document.getElementById("saved").style.display = "block";
-      setTimeout(() => document.getElementById("saved").style.display = "none", 2000);
-    });
+  const settings = {
+    apiProvider: getVal("apiProvider"),
+    endpoint: getVal("endpoint"),
+    deployment: getVal("deployment"),
+    apiVersion: getVal("apiVersion"),
+    apiKey: getVal("apiKey"),
+    model: getVal("model")
+  };
+  Office.context.roamingSettings.set("replycopilot.settings", settings);
+
+  Office.context.roamingSettings.saveAsync(() => {
+    showSaved();
   });
+}
+
+function resetProfile() {
+  Office.context.roamingSettings.remove("replycopilot.profile");
+  Office.context.roamingSettings.saveAsync(() => {
+    showSaved("Profile reset ✓");
+  });
+}
+
+function showSaved(text) {
+  const el = document.getElementById("saved");
+  el.textContent = text || "Saved ✓";
+  el.style.display = "inline";
+  setTimeout(() => (el.style.display = "none"), 2000);
 }
 
 function setVal(id, v){ const el=document.getElementById(id); if(el) el.value=v; }
 function getVal(id){ const el=document.getElementById(id); return el?el.value:""; }
-function setChecked(id, v){ const el=document.getElementById(id); if(el) el.checked=v; }
+function setChecked(id, v){ const el=document.getElementById(id); if(el) el.checked=!!v; }
 function getChecked(id){ const el=document.getElementById(id); return !!document.getElementById(id)?.checked; }
+``

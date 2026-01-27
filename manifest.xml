@@ -8,7 +8,9 @@
   <ProviderName>Shiben Naik</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Reply Copilot for Outlook"/>
-  <Description DefaultValue="Auto-draft replies (TL;DR, direct tone, medium length) and learn from Sent Items." />
+  <Description DefaultValue="Auto-draft replies with TL;DR (direct tone, medium length, 'Thanks' closing) and learn from Sent Items." />
+
+  <!-- Optional: icons (add icon-16.png, icon-32.png, icon-80.png to your repo to see ribbon icons) -->
   <IconUrl DefaultValue="https://shibennaik.github.io/reply-copilot-addin/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://shibennaik.github.io/reply-copilot-addin/icon-80.png"/>
 
@@ -32,8 +34,10 @@
     <Hosts>
       <Host xsi:type="Mailbox">
         <DesktopFormFactor>
+          <!-- This HTML must load Office.js + commands.js + events.js -->
           <FunctionFile resid="resid.FunctionFile.Url"/>
 
+          <!-- Ribbon button on message READ -->
           <ExtensionPoint xsi:type="MessageReadCommandSurface">
             <OfficeTab id="TabDefault">
               <Group id="msgread.group" label="Reply Copilot">
@@ -56,6 +60,7 @@
             </OfficeTab>
           </ExtensionPoint>
 
+          <!-- Ribbon button in COMPOSE -->
           <ExtensionPoint xsi:type="MessageComposeCommandSurface">
             <OfficeTab id="TabDefault">
               <Group id="compose.group" label="Reply Copilot">
@@ -78,7 +83,7 @@
             </OfficeTab>
           </ExtensionPoint>
 
-          <!-- Event-based: auto-inject on Reply, learn on Send -->
+          <!-- Event-based activation: auto-draft on Reply; learn on Send -->
           <ExtensionPoint xsi:type="LaunchEvent">
             <LaunchEvents>
               <LaunchEvent Type="OnNewMessageCompose" FunctionName="onNewMessageCompose" />
@@ -86,6 +91,7 @@
             </LaunchEvents>
           </ExtensionPoint>
 
+          <!-- Taskpane (settings) -->
           <Page resid="resid.Taskpane.Url"/>
         </DesktopFormFactor>
       </Host>
@@ -97,10 +103,12 @@
         <bt:Image id="icon32" DefaultValue="https://shibennaik.github.io/reply-copilot-addin/icon-32.png"/>
         <bt:Image id="icon80" DefaultValue="https://shibennaik.github.io/reply-copilot-addin/icon-80.png"/>
       </bt:Images>
+
       <bt:Urls>
         <bt:Url id="resid.FunctionFile.Url" DefaultValue="https://shibennaik.github.io/reply-copilot-addin/commands.html"/>
         <bt:Url id="resid.Taskpane.Url" DefaultValue="https://shibennaik.github.io/reply-copilot-addin/taskpane.html"/>
       </bt:Urls>
+
       <bt:ShortStrings>
         <bt:String id="resid.Button.Label" DefaultValue="Reply with Copilot"/>
         <bt:String id="resid.Compose.Label" DefaultValue="Regenerate Draft"/>
